@@ -1,0 +1,59 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 24
+    context-path: /backend
+    encoding:
+      charset: UTF-8
+
+spring:
+  profiles:
+    include: 
+      - mail  #  create file 'application-users.yml'
+      - users #  create file 'application-mail.yml'
+  devtools:
+    restart:
+      enabled: true
+  datasource:
+    #url: jdbc:h2:mem:testdb
+    #url: jdbc:h2:file:~/backendDB
+    #driverClassName: org.h2.Driver
+    url: jdbc:postgresql://localhost/backend
+    driverClassName: org.postgresql.Driver
+    username: postgresql
+    password: inside
+  jpa:
+    generate-ddl: true
+    hibernate:
+      #ddl-auto: create
+      #ddl-auto: update
+      ddl-auto: validate
+    #database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    properties:
+      show-sql: true
+      hibernate:
+        globally_quoted_identifiers: true   
+        format_sql: true
+  data:
+    rest:
+      defaultPageSize: 1000
+
+  h2:
+    console:
+      enabled: false        # http://localhost:8080/backend/h2-console
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+        type:
+          descriptor:
+            sql:
+              BasicBinder: INFO
+              
+application:
+  origins:
+    - http://localhost:5000
+    - pippo

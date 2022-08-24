@@ -1,0 +1,14 @@
+application:  
+  users:
+    -
+      id: 1
+      username: pippo
+      password: pippo
+      roles:
+        - ROLE_ADMIN
+    -
+      id: 2
+      username: admin@domain
+      password: admin
+      roles:
+        - ROLE_USER

@@ -1,0 +1,22 @@
+<h3>Posts List ({{ total$ | async }})</h3>
+
+<table class="table table-striped" *ngIf="(posts$ | async) as postsData">
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Id</th>
+        <th>Datetime</th>
+        <th scope="col" sortable="title" (sort)="onSort($event)">Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of postsData; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ post.id }}</td>
+        <td>{{ post.datetime }}</td>
+        <td scope="row" style="word-break: break-all">{{ post.title }}</td>
+        <td><i style="cursor: pointer;" class="bi bi-eye-fill" ></i></td>
+      </tr>
+    </tbody>
+  </table>
