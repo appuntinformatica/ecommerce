@@ -2,3 +2,23 @@
 
 <p>Edited: {{ edited$ | async }}</p>
 <p>ID: {{ id$ | async }}</p>
+
+<p>{{ post$ }}</p>
+
+<div class="container mt-2 mb-2">
+    <div class="row">
+        <form  [formGroup]="postForm">
+            <div class="form-group mb-2">
+                <label for="title">Title</label>
+                <input formControlName="title" type="text" class="form-control" id="title">
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="content">Content</label>
+                <textarea formControlName="content" class="form-control" id="content" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -18,9 +18,10 @@ import { SharedModule } from './shared/shared.module';
 import { HomeComponent } from './home/home.component';
 import { PostsModule } from './posts/posts.module';
 import { environment } from '../environments/environment';
-import { AuthTokenInterceptor } from './shared/auth-token.interceptor';
-import { HttpResponseInterceptor } from './shared/http-response.interceptor';
-import { HttpRequestInterceptor } from './shared/http-request.interceptor';
+
+import { HttpRequestInterceptor } from './http-interceptors/http-request.interceptor';
+import { HttpResponseInterceptor } from './http-interceptors/http-response.interceptor';
+import { AuthTokenInterceptor } from './http-interceptors/auth-token.interceptor';
 
 @NgModule({
   declarations: [

@@ -4,16 +4,15 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpResponse,
-  HttpErrorResponse
+  HttpResponse
 } from '@angular/common/http';
-import { Observable, take, exhaustMap, map, tap, catchError, of } from 'rxjs';
+import { Observable, map, catchError } from 'rxjs';
 
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../store/app.state';
 
-import * as fromShared from './state/shared.actions';
+import * as fromShared from '../shared/state/shared.actions';
 
 @Injectable()
 export class HttpResponseInterceptor implements HttpInterceptor {

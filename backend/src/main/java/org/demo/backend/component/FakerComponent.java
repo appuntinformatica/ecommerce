@@ -1,4 +1,4 @@
-package org.demo.backend;
+package org.demo.backend.component;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class PostFaker {
+public class FakerComponent {
 
 	@Autowired
 	AccountRepository accountRepository;

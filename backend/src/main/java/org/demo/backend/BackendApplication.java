@@ -1,5 +1,6 @@
 package org.demo.backend;
 
+import org.demo.backend.component.FakerComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,17 +20,17 @@ public class BackendApplication implements CommandLineRunner {
 	}
 	
 	@Autowired
-	private PostFaker postFaker;
+	private FakerComponent fakerComponent;
 
 	@Override
 	public void run(String... args) throws Exception {
 		log.info("START");
 
-		postFaker.createDefaultAccounts();
+		fakerComponent.createDefaultAccounts();
 		
-		postFaker.createAccounts(0);
+		fakerComponent.createAccounts(0);
 		
-		postFaker.createPosts(0);
+		fakerComponent.createPosts(0);
 		
 		log.info("STOP");		
 	}
