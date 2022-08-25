@@ -9,14 +9,14 @@
 ng new frontend
 OR:
 ng new frontend 
-&emsp;--create-application 
-&emsp;--inline-style 
-&emsp;--inline-template 
-&emsp;--minimal 
-&emsp;--routing 
-&emsp;--skip-git 
-&emsp;--skip-tests true 
-&emsp;--style css
+	--create-application 
+	--inline-style 
+	--inline-template 
+	--minimal 
+	--routing 
+	--skip-git 
+	--skip-tests true 
+	--style css
 ```
 
 ### Example Projects
