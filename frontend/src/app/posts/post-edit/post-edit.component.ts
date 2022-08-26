@@ -6,8 +6,10 @@ import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
 
 import { AppState } from 'src/app/store/app.state';
+import { Post } from '../posts.model';
 import * as fromActions from '../state/posts.actions';
 import * as fromSelector from '../state/posts.selector';
+import * as fromReducer from '../state/posts.reducer';
 
 @Component({
   selector: 'app-post-edit',
@@ -18,19 +20,18 @@ export class PostEditComponent implements OnInit, OnDestroy {
 
   subsc1!: Subscription;
   subsc2!: Subscription;
-  subsc3!: Subscription;
   
-  id$!: Observable<number | null>;
-  edited$: Observable<boolean> = of(false);
-  post$ = this.store.select(fromSelector.getPost);
+  id!: number | null;
+  editMode: boolean = false;
 
+  postById$: Observable<Post | null>;
   postForm!: FormGroup;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+    this.postById$ = store.select(fromSelector.selectPostById)!;
+   }
 
   ngOnInit(): void {
-    this.store.dispatch(fromActions.clearPost());
-    
     this.postForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
       content: new FormControl('', [Validators.required]),
@@ -38,32 +39,49 @@ export class PostEditComponent implements OnInit, OnDestroy {
 
     this.subsc1 = this.route.paramMap.subscribe(params => {
       if ( params.get('id') ) {
-        this.id$ = of(+params.get('id')!);
-        this.edited$ = of(true);
-        this.loadPost();
+        this.id = +params.get('id')!;
+        this.editMode = true;
+        this.postForm.disable();
+        this.loadPostById();
       }
     });
-    this.subsc2 = this.post$.subscribe(p => {
-      this.postForm.patchValue({
-        //title: p?.title,
-        //content: p?.content
-      });
+
+    this.subsc2 = this.postById$.subscribe(post => {
+      if (post) {
+        this.postForm.patchValue({
+          title: post.title,
+          content: post.content
+        });
+      }
     });
-  }
+  }  
 
   ngOnDestroy(): void {
-    this.subsc1?.unsubscribe();
-    this.subsc2?.unsubscribe();
-    this.subsc3?.unsubscribe();
+    this.subsc1.unsubscribe();
+    this.subsc2.unsubscribe();
   }
 
-  loadPost() {
-    console.log('PostEditComponent.loadPost()');
-    this.subsc3 = this.id$?.subscribe(id => {
-      if (id) {
-        this.store.dispatch(fromActions.getPost({ id: id }));
-      }
-    });    
+  onSave() {
+    const post : Post = {
+      id: this.id!,
+      datetime: new Date(),
+      title: this.postForm.value.title,
+      content: this.postForm.value.content,
+    };
+    if ( this.editMode ) {
+
+    } else {
+      this.store.dispatch(fromActions.AddPost({ payload: { post } }));
+    }
   }
 
+  onEdit() {
+    this.editMode = true;
+    this.postForm.enable();
+  }
+
+  loadPostById() {
+    this.store.dispatch(fromActions.LoadPostById({ payload: { id: this.id! }}))        
+  }
+ 
 }

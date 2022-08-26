@@ -36,7 +36,7 @@ public class ExposeEntityIdRestConfiguration implements RepositoryRestConfigurer
 		Class[] domainTypes = entityClasses.toArray(new Class[0]);
 		config.exposeIdsFor(domainTypes);
 		
-		HttpMethod[] theUnsupportedActions = { HttpMethod.DELETE, HttpMethod.PATCH };
+		HttpMethod[] theUnsupportedActions = { HttpMethod.PATCH };
 		
 		config.getExposureConfiguration()
 			.forDomainType(Post.class)

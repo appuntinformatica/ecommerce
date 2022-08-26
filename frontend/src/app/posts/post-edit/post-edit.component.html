@@ -1,13 +1,11 @@
 <p>post-edit works!</p>
 
-<p>Edited: {{ edited$ | async }}</p>
-<p>ID: {{ id$ | async }}</p>
-
-<p>{{ post$ }}</p>
+<p>Edited: {{ editMode }}</p>
+<p>ID: {{ id }}</p>
 
 <div class="container mt-2 mb-2">
     <div class="row">
-        <form  [formGroup]="postForm">
+        <form (ngSubmit)="onSave()" [formGroup]="postForm">
             <div class="form-group mb-2">
                 <label for="title">Title</label>
                 <input formControlName="title" type="text" class="form-control" id="title">
@@ -18,7 +16,12 @@
                 <textarea formControlName="content" class="form-control" id="content" rows="3"></textarea>
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button  type="submit" class="btn btn-success"[disabled]="!postForm.valid">
+                {{ editMode ? 'Update' : 'Add' }}&nbsp;
+            </button>&nbsp;
+
+            <button *ngIf="editMode" type="button" class="btn btn-primary" (click)="onEdit()">Edit</button>&nbsp;
+            <button *ngIf="editMode" type="button" class="btn btn-danger">Delete</button>&nbsp;
         </form>
     </div>
 </div>

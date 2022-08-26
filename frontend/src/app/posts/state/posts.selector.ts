@@ -1,19 +1,14 @@
+
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { postsAdapter, PostsState } from './posts.state';
+import { PostState } from './posts.state';
+import * as fromAdapter from './posts.adapter';
+import { postState } from 'src/app/store/app.state';
 
-export const POST_STATE_NAME = 'posts';
+export const getPostState = createFeatureSelector<PostState>(postState);
 
-const getPostsState = createFeatureSelector<PostsState>(POST_STATE_NAME);
-export const postsSelectors = postsAdapter.getSelectors();
 
-export const getPosts = createSelector(getPostsState, postsSelectors.selectAll);
+export const selectAllPosts = createSelector(getPostState, fromAdapter.selectAllPosts);
+export const postsTotal = createSelector(getPostState, (state) => state.total);
 
-export const getPostEntities = createSelector(
-  getPostsState,
-  postsSelectors.selectEntities
-);
-
-export const getTotal = createSelector(getPostsState, (state) => state.total);
-
-export const getPost = createSelector(getPostsState, (state) => state);
+export const selectPostById = createSelector(getPostState, (state: PostState) => state.selectedPost);

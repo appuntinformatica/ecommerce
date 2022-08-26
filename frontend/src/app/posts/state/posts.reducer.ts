@@ -1,25 +1,38 @@
-import { createEntityAdapter } from '@ngrx/entity';
-import { createReducer, on, } from '@ngrx/store';
 
-import { Post } from '../posts.model';
+import { createReducer, on } from '@ngrx/store';
+
+import * as fromAdapter from './posts.adapter'
 import * as fromActions from './posts.actions';
-import { initialState } from './posts.state';
+import { PostState } from './posts.state';
 
-const postsAdapter = createEntityAdapter<Post>();
+
+export const initialState: PostState = fromAdapter.adapter.getInitialState({
+  selectedPost: null,
+  total: 0
+});
 
 export const postsReducer = createReducer(
   initialState,
-  on(fromActions.postsLoaded, (state, action) => {
-    return postsAdapter.setAll(action.posts, {
-      ...state,
-      total: action.total
-    })
-  }),
-  on(fromActions.postLoaded, (state, action) => {
-    return postsAdapter.setOne(action.post!, {
-      ...state,
-      post: action.post
-    })
-  })
-);
 
+  on(fromActions.LoadPostsSuccess, (state, { payload }) => {
+    state = fromAdapter.adapter.removeAll({ 
+      ...state,
+      selectedPost: null,
+      total: payload.page.totalElements
+    });
+    return fromAdapter.adapter.addMany(payload._embedded.posts, state);
+  }),
+  on(fromActions.LoadPostsError, (state) => {
+    return fromAdapter.adapter.removeAll({ 
+      ...state,
+      selectedPost: null,
+      total: 0
+    });    
+  }),
+
+  on(fromActions.LoadPostByIdSuccess, (state, { payload }) => Object.assign({
+    ...state,
+    selectedPost: payload.post,
+    total: 0
+  }))
+);

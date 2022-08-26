@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { environment } from './../../environments/environment';
 import { AppState } from '../store/app.state';
@@ -22,9 +22,18 @@ export class PostsService {
   }
 
   getPostById(id: number) : Observable<Post> {
-    const url = `${environment.serverUrl}/api/posts/${id}`;
-
-    return this.http.get<Post>(url);
+    return this.http.get<Post>(`${environment.serverUrl}/api/posts/${id}`);
   }
 
+  addPost(post: Post): Observable<Post> {
+    return this.http.post<Post>( `${environment.serverUrl}/api/posts`, post );
+  }
+
+  updatePost(id: number, post: Post): Observable<Post> {
+    return this.http.put<Post>( `${environment.serverUrl}/api/posts/${id}`, post );
+  }
+
+  deletePost(id: number) {
+    return this.http.delete( `${environment.serverUrl}/api/posts/${id}`);
+  }
 }

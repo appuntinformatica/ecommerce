@@ -4,8 +4,9 @@ import { Component, OnInit, QueryList, ViewChildren, OnDestroy } from '@angular/
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/app.state';
 
-import * as fromPostsSelector from '../state/posts.selector';
-import * as fromPostsActions from '../state/posts.actions';
+import * as fromSelector from '../state/posts.selector';
+import * as fromActions from '../state/posts.actions';
+
 import { NgbdSortableHeader, SortEvent } from 'src/app/shared/ngbd-sortable-header/ngbd-sortable-header.directive';
 import { FormControl } from '@angular/forms';
 import { Observable, of, Subscription } from 'rxjs';
@@ -19,8 +20,8 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
 
-  posts$ = this.store.select(fromPostsSelector.getPosts);
-  total$ = this.store.select(fromPostsSelector.getTotal);
+  posts$ = this.store.select(fromSelector.selectAllPosts);
+  total$ = this.store.select(fromSelector.postsTotal);
 
   query: string = '';
   page: number = 0;
@@ -50,13 +51,13 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   loadPosts() {
     console.log('PostsListComponent.loadPosts()');
-    const params: PostParams = {
+    const postParams: PostParams = {
       query: this.query,
       page: this.page,
       size: this.pageSize,
       sort: this.sort
     }
-    this.store.dispatch(fromPostsActions.fetchPosts(params));
+    this.store.dispatch(fromActions.LoadPosts({ payload: { postParams: postParams } }));
   }
 
   onSearch() {

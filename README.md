@@ -7,7 +7,9 @@
 ### Create Project Angular 14
 ```
 ng new frontend
-OR:
+	
+	OR:
+
 ng new frontend 
 	--create-application 
 	--inline-style 
