@@ -36,12 +36,10 @@ public class ExposeEntityIdRestConfiguration implements RepositoryRestConfigurer
 		Class[] domainTypes = entityClasses.toArray(new Class[0]);
 		config.exposeIdsFor(domainTypes);
 		
-		HttpMethod[] theUnsupportedActions = { HttpMethod.PATCH };
-		
 		config.getExposureConfiguration()
 			.forDomainType(Post.class)
-			.withItemExposure((metadata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-			.withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+			.withItemExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PATCH))
+			.withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PATCH));
     }
     
 }

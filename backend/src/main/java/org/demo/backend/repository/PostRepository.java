@@ -1,5 +1,7 @@
 package org.demo.backend.repository;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.demo.backend.model.Post;
@@ -14,8 +16,16 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface PostRepository extends CrudRepository<Post, Long>, JpaRepository<Post, Long> {
-
-
+	
+	@Override		/* --> (GET) http://localhost:8080/backend/api/posts/:id */
+	@Query("SELECT p FROM Post p WHERE p.id = :id AND p.account = (SELECT a FROM Account a WHERE a.email = ?#{principal.username})") 
+	Optional<Post> findById(@Param("id") Long id);
+	
+	@Override
+	@Modifying
+	@Transactional	/* --> (DELETE) http://localhost:8080/backend/api/posts/:id */
+	@Query("DELETE Post p WHERE p.id = :id AND p.account = (SELECT a FROM Account a WHERE a.email = ?#{principal.username})") 
+	void deleteById(@Param("id") Long id);
 	
 	/* http://localhost:8080/backend/api/posts */
 	@Query(value = "SELECT p FROM Post p WHERE p.account.email = ?#{principal.username}",
@@ -36,13 +46,11 @@ public interface PostRepository extends CrudRepository<Post, Long>, JpaRepositor
 						+ ")")
 	Page<Post> findByTitleOrContent(@Param("query") String query, Pageable pageable);
 	
-	// http://localhost:8080/backend/api/posts/search/findByAccountEmail?email=...
-	Page<Post> findByAccountEmail(@Param("email") String email, Pageable pageable);
-
-	Page<Post> findByAccountId(@Param("accountId") Long accountId, Pageable pageable);
-
 	@Modifying
-	@Transactional
-	@Query("UPDATE Post p SET p.title = :title WHERE p.id = :id AND p.account = (SELECT a FROM Account a WHERE a.email = ?#{principal.username})") /* https://stackoverflow.com/questions/40755008/spring-data-rest-update-produce-cross-join-sql-error */
+	@Transactional   /* PUT http://localhost:8080/backend/api/posts */
+	@Query("UPDATE Post p SET p.title = :title WHERE p.id = :id AND p.account = (SELECT a FROM Account a WHERE a.email = ?#{principal.username})") 
+	/* https://stackoverflow.com/questions/40755008/spring-data-rest-update-produce-cross-join-sql-error */
 	int update(@Param("id") Long id, @Param("title") String title);
+
+	
 }

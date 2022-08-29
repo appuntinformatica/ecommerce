@@ -1,5 +1,9 @@
 export class Post {
 
+    public account? = {
+        id: 0
+    }
+
     constructor(
                 public id: number,
                 public datetime: Date,

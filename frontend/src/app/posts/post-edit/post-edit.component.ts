@@ -67,6 +67,9 @@ export class PostEditComponent implements OnInit, OnDestroy {
       datetime: new Date(),
       title: this.postForm.value.title,
       content: this.postForm.value.content,
+      account: {
+        id: 1
+      }
     };
     if ( this.editMode ) {
 

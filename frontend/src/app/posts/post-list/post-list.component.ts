@@ -26,7 +26,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   query: string = '';
   page: number = 0;
   pageSize: number = 10;
-  sort: string = 'title,asc';
+  sort: string = 'title,desc';
  
 
   filter = new FormControl('', {nonNullable: true});
