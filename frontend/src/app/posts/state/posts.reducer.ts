@@ -34,5 +34,7 @@ export const postsReducer = createReducer(
     ...state,
     selectedPost: payload.post,
     total: 0
-  }))
+  })),
+
+
 );

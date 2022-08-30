@@ -9,23 +9,27 @@ import { AuthEffects } from './state/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RecoveryPasswordComponent } from './recoveryPassword/recovery-password.component';
 import { AuthMessageComponent } from './auth-message/auth-message.component';
+import { AuthFormComponent } from './auth-form/auth-form.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 
 const routes: Routes = [
- 
   {
     path: '',
     children: [
       { path: 'recoveryPassword', component: RecoveryPasswordComponent },
       { path: 'auth-message', component: AuthMessageComponent },
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
+      { path: '', redirectTo: 'auth', pathMatch: 'full' },
+      { path: 'auth', component: AuthFormComponent },
     ],
   },
   
 ];
 
 @NgModule({
-  declarations: [ 
+  declarations: [
+    AuthFormComponent,
     LoginComponent,
     RecoveryPasswordComponent,
     AuthMessageComponent
@@ -35,7 +39,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     EffectsModule.forFeature([AuthEffects]),
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgbModule,
+    NgxBootstrapIconsModule.pick(allIcons)
   ]
 })
 export class AuthModule {}

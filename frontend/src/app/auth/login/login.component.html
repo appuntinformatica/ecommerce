@@ -1,3 +1,41 @@
+<div class="card">
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <div class="d-flex justify-content-center mt-3">
+        <div class="input-group w-75">
+          <div class="input-group-text" >
+            <i-bs name="person"></i-bs>
+          </div>
+          <input formControlName="username" type="text" class="form-control" placeholder="Username or email">
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-center mt-3">
+        <div class="input-group w-75">
+          <div class="input-group-text" >
+            <i-bs name="lock"></i-bs>
+          </div>
+          <input formControlName="password" type="password" class="form-control" placeholder="Password">
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <div class="col-4">
+          <input name="rem" type="checkbox" checked="">
+          <label class="modal-form-label" for="remember">Remember me</label>  
+        </div>
+        <div class="col-4">
+          <a class="pull-right forgot-link" [routerLink]="['/recoveryPassword']">Forgot Password</a>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-3 mb-3">
+        <div class="col-8">
+          <button class="btn btn-success w-100" type="submit" [disabled]="!loginForm.valid">Sign In</button>
+        </div>
+      </div>
+    </form>
+</div>
+<!--
 <div class="h-100 w-100 d-flex align-items-center justify-content-center">
     <div class="text-center">
         <div class="form-signin m-auto form-detail">
@@ -33,3 +71,4 @@
         </div>
     </div>
   </div>
+  -->

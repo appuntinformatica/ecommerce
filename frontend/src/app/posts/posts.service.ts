@@ -16,7 +16,7 @@ export class PostsService {
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   fetchPosts(params: PostParams) : Observable<PostsResponse> {
-    const url = `${environment.serverUrl}/api/posts/search/findByTitleOrContent?query=${params.query}&page=${params.page - 1}&size=${params.size}`;
+    const url = `${environment.serverUrl}/api/posts/search/findByTitleOrContent?query=${params.query}&page=${params.page - 1}&size=${params.size}&sort=${params.sort}`;
 
     return this.http.get<PostsResponse>(url);
   }
@@ -26,14 +26,14 @@ export class PostsService {
   }
 
   addPost(post: Post): Observable<Post> {
-    return this.http.post<Post>( `${environment.serverUrl}/api/posts`, post );
+    return this.http.post<Post>( `${environment.serverUrl}/api/posts/add`, post );
   }
 
   updatePost(id: number, post: Post): Observable<Post> {
-    return this.http.put<Post>( `${environment.serverUrl}/api/posts/${id}`, post );
+    return this.http.put<Post>( `${environment.serverUrl}/api/posts/update/${id}`, post );
   }
 
   deletePost(id: number) {
-    return this.http.delete( `${environment.serverUrl}/api/posts/${id}`);
+    return this.http.delete( `${environment.serverUrl}/api/posts/delete/${id}`);
   }
 }

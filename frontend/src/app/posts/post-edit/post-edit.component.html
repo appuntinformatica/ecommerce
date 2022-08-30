@@ -7,6 +7,22 @@
     <div class="row">
         <form (ngSubmit)="onSave()" [formGroup]="postForm">
             <div class="form-group mb-2">
+                <label for="title">Datetime</label>
+                <div class="d-flex align-items-center " style="height: 100px;">
+                    
+                    <div class="input-group w-50">
+                        <input formControlName="date" class="form-control" placeholder="yyyy-mm-dd" 
+                            ngbDatepicker name="dp" #d="ngbDatepicker">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                            <i-bs name="calendar"></i-bs>
+                        </button>
+                    </div>
+                    &nbsp;
+                    <ngb-timepicker formControlName="time"></ngb-timepicker>
+                </div>
+            </div>
+
+            <div class="form-group mb-2">
                 <label for="title">Title</label>
                 <input formControlName="title" type="text" class="form-control" id="title">
             </div>
@@ -21,7 +37,7 @@
             </button>&nbsp;
 
             <button *ngIf="editMode" type="button" class="btn btn-primary" (click)="onEdit()">Edit</button>&nbsp;
-            <button *ngIf="editMode" type="button" class="btn btn-danger">Delete</button>&nbsp;
+            <button *ngIf="editMode" type="button" class="btn btn-danger" (click)="onRemove()">Remove</button>&nbsp;
         </form>
     </div>
 </div>

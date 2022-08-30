@@ -8,6 +8,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +35,7 @@ import { AuthTokenInterceptor } from './http-interceptors/auth-token.interceptor
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
+    NgxBootstrapIconsModule.pick(allIcons),
     NgbModule,
     SharedModule,
     AuthModule,

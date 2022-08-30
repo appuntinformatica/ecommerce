@@ -50,7 +50,7 @@ public interface PostRepository extends CrudRepository<Post, Long>, JpaRepositor
 	@Transactional   /* PUT http://localhost:8080/backend/api/posts */
 	@Query("UPDATE Post p SET p.title = :title WHERE p.id = :id AND p.account = (SELECT a FROM Account a WHERE a.email = ?#{principal.username})") 
 	/* https://stackoverflow.com/questions/40755008/spring-data-rest-update-produce-cross-join-sql-error */
-	int update(@Param("id") Long id, @Param("title") String title);
+	int updatePost(@Param("id") Long id, @Param("title") String title);
 
 	
 }

@@ -90,7 +90,7 @@ export class AuthEffects {
         map((action) => {
           console.log('autoLogoutEffect$ action: ', action)
           this.authService.logout();
-          this.router.navigate(['login']);
+          this.router.navigate(['auth']);
         })
       );
     },

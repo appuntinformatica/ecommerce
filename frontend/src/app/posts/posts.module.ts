@@ -10,7 +10,7 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostEditComponent } from './post-edit/post-edit.component';
 import { NgbdSortableHeader } from '../shared/ngbd-sortable-header/ngbd-sortable-header.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxBootstrapIconsModule, eyeFill, search } from 'ngx-bootstrap-icons';
+import { NgxBootstrapIconsModule, eyeFill, search, calendar } from 'ngx-bootstrap-icons';
 
 const routes: Routes = [ 
   {
@@ -36,7 +36,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgxBootstrapIconsModule.pick({ eyeFill, search }),
+    NgxBootstrapIconsModule.pick({ eyeFill, search, calendar }),
     EffectsModule.forFeature([PostsEffects]),
     RouterModule.forChild(routes)
   ]

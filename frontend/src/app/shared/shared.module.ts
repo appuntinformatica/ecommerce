@@ -7,12 +7,14 @@ import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { HeaderComponent } from './header/header.component';
+import { NgbdModalConfirm } from './modal-confirm/ngbd-modal-confirm.component';
 
 
 @NgModule({
   declarations: [ 
     HeaderComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    NgbdModalConfirm
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { HeaderComponent } from './header/header.component';
   ],
   exports: [
     LoadingSpinnerComponent,
-    HeaderComponent
+    HeaderComponent,
+    NgbdModalConfirm
   ]
 })
 export class SharedModule {}

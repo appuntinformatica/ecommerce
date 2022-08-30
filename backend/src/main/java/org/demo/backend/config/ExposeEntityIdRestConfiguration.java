@@ -38,8 +38,8 @@ public class ExposeEntityIdRestConfiguration implements RepositoryRestConfigurer
 		
 		config.getExposureConfiguration()
 			.forDomainType(Post.class)
-			.withItemExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PATCH))
-			.withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PATCH));
+			.withItemExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH))
+			.withCollectionExposure((metadata, httpMethods) -> httpMethods.disable(HttpMethod.POST, HttpMethod.PUT, HttpMethod.PATCH));
     }
     
 }

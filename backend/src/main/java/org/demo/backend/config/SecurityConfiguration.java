@@ -58,6 +58,7 @@ public class SecurityConfiguration {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
 					.allowedOrigins(origins)
+					.allowedMethods("*")
 					.allowedHeaders("*");
 			}
 		};

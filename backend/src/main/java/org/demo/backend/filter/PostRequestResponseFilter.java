@@ -1,7 +1,11 @@
 package org.demo.backend.filter;
 
-import org.demo.backend.model.Account;
-import org.demo.backend.repository.AccountRepository;
+import java.io.IOException;
+import java.util.Optional;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,11 +14,10 @@ import org.springframework.web.filter.ServletRequestPathFilter;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Optional;
+import org.demo.backend.component.AccountComponent;
+import org.demo.backend.model.Account;
+import org.demo.backend.repository.AccountRepository;
+
  
 @Slf4j
 @Component
@@ -23,21 +26,21 @@ public class PostRequestResponseFilter extends ServletRequestPathFilter {
 	@Autowired
 	AccountRepository accountRepository;
 	
+	@Autowired
+	AccountComponent accountComponent;
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
     	String username = SecurityContextHolder.getContext().getAuthentication().getName();
     	log.info("username = {}", username);
-    	
-    	HttpServletRequest req = (HttpServletRequest) request;
-    	HttpServletResponse res = (HttpServletResponse) response;
-    	
+
     	Optional<Account> account = accountRepository.findByEmail( username );
 		if ( account.isPresent() ) {
-			req.getSession().setAttribute("account", account.get());
+
+			accountComponent.setId( account.get().getId() );
 		} else {
-			res.setStatus(HttpStatus.UNAUTHORIZED.value());		
+	    	((HttpServletResponse) response).setStatus(HttpStatus.UNAUTHORIZED.value());		
 		}
 
 		chain.doFilter(request, response);

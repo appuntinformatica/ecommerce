@@ -56,5 +56,29 @@ export class PostsEffects {
         ))), { dispatch: false }
     )
 
+    updatePost$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.UpdatePost),
+        mergeMap((props) => 
+        this.postsService.updatePost(props.payload.post.id, props.payload.post).pipe(
+            map(()=> {
+                this.route.navigate(['/posts/post-list']);
+            }),
+            catchError((errResp: HttpErrorResponse) => of( () => {
+                this.route.navigate([`/posts/post-edit:${props.payload.post.id}`]);
+            }))
+        ))), { dispatch: false }
+    )
 
+    removePost$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.RemovePost),
+        mergeMap((props) => 
+        this.postsService.deletePost(props.payload.id).pipe(
+            map(()=> {
+                this.route.navigate(['/posts/post-list']);
+            }),
+            catchError((errResp: HttpErrorResponse) => of( () => {
+                this.route.navigate([`/posts/post-edit:${props.payload.id}`]);
+            }))
+        ))), { dispatch: false }
+    )
 }
