@@ -8,10 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +26,16 @@ import lombok.Setter;
 @ConfigurationProperties(prefix = "application")
 public class SecurityConfiguration {
  
+	private static final String[] PUBLIC_APIS = new String[] {
+		 "/api/auth/**"
+    };
+	private static final String[] ROLE_ACCOUNT_APIS = new String[] {
+		"/api/posts/**",
+		"/api/upload/**",
+		"/api/download/**"
+		
+   }; 
+
 	@Bean
 	public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
 	    return new SecurityEvaluationContextExtension();
@@ -69,14 +77,16 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors()
+    			.and()
+        	.csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests() 
-                .antMatchers("/api/auth/**").permitAll()
-            	.antMatchers("/api/posts/**").hasAuthority( Role.ROLE_ACCOUNT.name() )
+                .antMatchers(PUBLIC_APIS).permitAll()
+            	.antMatchers(ROLE_ACCOUNT_APIS).hasAuthority( Role.ROLE_ACCOUNT.name() )
                 .anyRequest().authenticated();
         
         http.headers().frameOptions().disable();

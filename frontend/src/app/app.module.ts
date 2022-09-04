@@ -1,3 +1,4 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,14 +24,20 @@ import { environment } from '../environments/environment';
 import { HttpRequestInterceptor } from './http-interceptors/http-request.interceptor';
 import { HttpResponseInterceptor } from './http-interceptors/http-response.interceptor';
 import { AuthTokenInterceptor } from './http-interceptors/auth-token.interceptor';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FirebaseComponent } from './firebase/firebase.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    FileUploadComponent,
+    FirebaseComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,    
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([]),

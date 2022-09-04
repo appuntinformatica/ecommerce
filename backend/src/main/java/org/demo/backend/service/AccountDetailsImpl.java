@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.demo.backend.model.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import org.demo.backend.model.Account;
 
 public class AccountDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;

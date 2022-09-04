@@ -24,12 +24,13 @@
           <label class="modal-form-label" for="remember">Remember me</label>  
         </div>
         <div class="col-4">
-          <a class="pull-right forgot-link" [routerLink]="['/recoveryPassword']">Forgot Password</a>
+          <a class="pull-right forgot-link" [routerLink]="['/recoveryPassword']">Forgot Password</a>          
         </div>
       </div>
 
       <div class="d-flex justify-content-center mt-3 mb-3">
         <div class="col-8">
+          <a class="pull-right forgot-link" [routerLink]="['/firebase']">Firebase</a>
           <button class="btn btn-success w-100" type="submit" [disabled]="!loginForm.valid">Sign In</button>
         </div>
       </div>

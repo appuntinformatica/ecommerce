@@ -56,4 +56,4 @@ logging:
 application:
   origins:
     - http://localhost:5000
-    - pippo
+    - https://andreaminnucci.altervista.org
